@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { GameDiv, Progress, ProgressInner } from "./styles"
-import { QuestionCard } from "@components/QuestionCard"
+import { QuestionCard } from "@/components/QuestionCard"
 import { useAppDispatch, useAppSelector } from "@/redux/hooks"
 import {
   selectIsLoading,
@@ -13,7 +13,7 @@ import {
   appendMediumResult,
 } from "@/redux/slices/finalResults/finalResultsSlice"
 import { Meta } from "@/config/meta"
-import { ResultBlock } from "@components/ResultBlock"
+import { ResultBlock } from "@/components/ResultBlock"
 
 export const Game: React.FC = () => {
   const [questionStep, setQuestionStep] = useState(0)

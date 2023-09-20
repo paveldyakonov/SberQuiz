@@ -15,7 +15,7 @@ export const AnswerCheckboxBlock: React.FC<Props> = ({
 }) => {
   return (
     <AnswerDiv>
-      <div>
+      <div data-testid={"checkbox-answer"}>
         <AnswerInput
           onChange={onChange}
           value={title}

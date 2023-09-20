@@ -3,7 +3,7 @@ import { ResultDiv } from "./styles"
 import { selectResults } from "@/redux/slices/finalResults/finalResultsSlice"
 import { AccordionResults } from "../AccordionResults"
 import { useState } from "react"
-import { Button } from "@components/Button"
+import { Button } from "@/components/Button"
 
 export const ResultBlock: React.FC = () => {
   const {
@@ -22,7 +22,7 @@ export const ResultBlock: React.FC = () => {
     correctEasyAnswers + correctMediumAnswers + correctHardAnswers
 
   return (
-    <ResultDiv>
+    <ResultDiv data-testid={"resultBlock"}>
       <h2>
         Вы ответили правильно на {countOfCorrectAnswers} из {resultsLength}
       </h2>
@@ -53,7 +53,7 @@ export const ResultBlock: React.FC = () => {
         }
         setIsOpen={(value) => setSelectedAccordion(value)}
       />
-      <a href="/">
+      <a data-testid={"to-start"} href="/">
         <Button title="Попробовать снова" />
       </a>
     </ResultDiv>

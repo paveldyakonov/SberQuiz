@@ -1,15 +1,24 @@
+import "@testing-library/jest-dom"
 import { render } from "@testing-library/react"
-import { Provider } from "react-redux"
-import { store } from "./redux/store"
 import App from "./App"
+import { Provider } from "react-redux"
+import { createReduxStore } from "./redux/store"
+import { Meta } from "./config/meta"
 
-test("renders learn react link", () => {
-  const { getByText } = render(
-    <Provider store={store}>
-      <App />
-    </Provider>,
-  )
-
-  // eslint-disable-next-line testing-library/prefer-screen-queries
-  expect(getByText(/learn/i)).toBeInTheDocument()
+describe("App", () => {
+  test("Запуск приложения", () => {
+    const store = createReduxStore({
+      questionsSlice: {
+        items: [],
+        meta: Meta.loading,
+      },
+    })
+    const state = store.getState()
+    render(
+      <Provider store={store}>
+        <App />
+      </Provider>,
+    )
+    expect(state).toBeTruthy()
+  })
 })

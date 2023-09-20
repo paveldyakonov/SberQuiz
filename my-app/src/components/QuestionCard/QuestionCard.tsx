@@ -1,8 +1,8 @@
 import { Question } from "@/redux/types"
 import React, { useEffect, useState } from "react"
-import { AnswerBlock } from "@components/AnswerBlock"
+import { AnswerBlock } from "@/components/AnswerBlock"
 import { Form } from "./styles"
-import { Button } from "@components/Button"
+import { Button } from "@/components/Button"
 import { AnswerCheckboxBlock } from "../AnswerCheckboxBlock"
 
 type Props = {
@@ -56,7 +56,7 @@ export const QuestionCard: React.FC<Props> = ({ question, onClickNextBtn }) => {
   }
 
   return (
-    <div>
+    <div data-testid={"questionCard"}>
       <h1 dangerouslySetInnerHTML={{ __html: question.question }}></h1>
       {typeof question.correct_answer !== "string" && (
         <h3>Выберите несколько ответов</h3>

@@ -9,7 +9,7 @@ type Props = {
 export const AnswerBlock: React.FC<Props> = ({ onChange, title, id }) => {
   return (
     <AnswerDiv>
-      <div>
+      <div data-testid={"answer-block"}>
         <AnswerInput
           onChange={onChange}
           value={title}

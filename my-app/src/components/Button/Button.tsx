@@ -6,5 +6,9 @@ type Props = {
 } & React.ButtonHTMLAttributes<HTMLButtonElement>
 
 export const Button: React.FC<Props> = ({ title, ...props }) => {
-  return <MainButton {...props}>{title}</MainButton>
+  return (
+    <MainButton data-testid={"button"} {...props}>
+      {title}
+    </MainButton>
+  )
 }

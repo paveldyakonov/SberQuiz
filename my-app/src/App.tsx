@@ -1,7 +1,6 @@
-import "./App.css"
 import { MainPage } from "./pages/MainPage"
 
-function App() {
+export function App() {
   return (
     <main>
       <MainPage />

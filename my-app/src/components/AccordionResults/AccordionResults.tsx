@@ -30,12 +30,15 @@ export const AccordionResults: React.FC<Props> = ({
 
   return (
     <AccordionDiv>
-      <AccordionTitle onClick={onAccordionClickHandler}>
+      <AccordionTitle
+        data-testid={"accordion"}
+        onClick={onAccordionClickHandler}
+      >
         <div>{title}</div>
         <div>{isOpen ? "-" : "+"}</div>
       </AccordionTitle>
       {isOpen && (
-        <AccordionContent>
+        <AccordionContent data-testid={"accordion-content"}>
           {results.map((result) => (
             <AccordionContentQuestion
               iscorrect={result.answer === result.question.correct_answer}
