@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
-import { ResultFromServer } from "./types"
+import { ResultFromServer } from "../../types"
 import axios from "axios"
 import { API_ENDPOINT } from "@config/api"
 

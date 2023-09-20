@@ -9,10 +9,10 @@ export enum Difficulty {
 export type Question = {
   category: string
   type: string
-  difficulty: string
+  difficulty: Difficulty
   question: string
-  correct_answer: string
-  incorrect_answer: string[]
+  correct_answer: string | string[]
+  incorrect_answers: string[]
 }
 
 export type ResultFromServer = {
@@ -23,4 +23,18 @@ export type ResultFromServer = {
 export interface IQuestionState {
   items: Question[]
   meta: Meta
+}
+
+export type Result = {
+  question: Question
+  answer: string
+}
+
+export interface IResultState {
+  easy: Result[]
+  medium: Result[]
+  hard: Result[]
+  correctEasyAnswers: number
+  correctMediumAnswers: number
+  correctHardAnswers: number
 }

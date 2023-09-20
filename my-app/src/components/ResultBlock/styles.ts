@@ -6,7 +6,9 @@ export const ResultDiv = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 80vh;
+  gap: 15px;
+  height: max-content;
+  padding-top: 100px;
 `
 
 export const ResultButton = styled.button`

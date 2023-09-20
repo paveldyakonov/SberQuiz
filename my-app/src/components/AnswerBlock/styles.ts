@@ -1,12 +1,12 @@
 import styled from "styled-components"
 
-export const QuestionDiv = styled.div`
+export const AnswerDiv = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
 `
 
-export const QuestionLabel = styled.label`
+export const AnswerLabel = styled.label`
   color: white;
   padding: 20px 60px;
   background: #2b65ec;
@@ -15,8 +15,9 @@ export const QuestionLabel = styled.label`
   cursor: pointer;
   font-size: 18px;
   font-weight: 400;
-  min-width: 100px;
-  width: 20vw;
+  min-width: 200px;
+  width: 35vw;
+  max-width: 500px;
   white-space: wrap;
   position: relative;
   transition: 0.4s ease-in-out 0s;
@@ -54,7 +55,7 @@ export const QuestionLabel = styled.label`
   }
 `
 
-export const QuestionInput = styled.input`
+export const AnswerInput = styled.input`
   display: none;
 
   &:checked ~ label {

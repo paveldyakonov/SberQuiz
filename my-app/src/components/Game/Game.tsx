@@ -1,42 +1,71 @@
 import { useState } from "react"
 import { GameDiv, Progress, ProgressInner } from "./styles"
-import { QuestionBlock } from "@/components/QuestionBlock"
-
-const questions = [
-  "Это функция для хранения данных компонента",
-  "Это глобальный стейт",
-]
+import { QuestionCard } from "@components/QuestionCard"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import {
+  selectIsLoading,
+  selectQuestions,
+} from "@/redux/slices/questions/questionsSlice"
+import { Difficulty, Result } from "@/redux/types"
+import {
+  appendEasyResult,
+  appendHardResult,
+  appendMediumResult,
+} from "@/redux/slices/finalResults/finalResultsSlice"
+import { Meta } from "@/config/meta"
+import { ResultBlock } from "@components/ResultBlock"
 
 export const Game: React.FC = () => {
-  const [selected, setSelected] = useState("")
+  const [questionStep, setQuestionStep] = useState(0)
 
-  const handleClickOnQuestion = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSelected(e.target.value)
+  const questions = useAppSelector(selectQuestions)
+  const isLoading = useAppSelector(selectIsLoading)
+  const dispatch = useAppDispatch()
+
+  const question = questions[questionStep]
+
+  let percentOfProgress = 0
+  if (questions.length > 0) {
+    percentOfProgress = Math.round((questionStep / questions.length) * 100)
   }
 
-  const handleSubmit = (e: React.SyntheticEvent) => {
-    e.preventDefault()
-    console.log(e.target)
-    console.log(selected)
+  const onClickNextBtn = (selectedAnswer: string) => {
+    const result: Result = {
+      question: question,
+      answer: selectedAnswer,
+    }
+
+    switch (question.difficulty) {
+      case Difficulty.Easy:
+        dispatch(appendEasyResult(result))
+        break
+      case Difficulty.Medium:
+        dispatch(appendMediumResult(result))
+        break
+      case Difficulty.Hard:
+        dispatch(appendHardResult(result))
+        break
+      default:
+        break
+    }
+
+    setQuestionStep((step) => step + 1)
   }
 
   return (
     <GameDiv>
       <Progress>
-        <ProgressInner style={{ width: "100%" }} />
+        <ProgressInner style={{ width: `${percentOfProgress}%` }} />
       </Progress>
-      <h1>Что такое useState?</h1>
-      <form onSubmit={handleSubmit}>
-        {questions.map((question, index) => (
-          <QuestionBlock
-            key={`${question}${index}`}
-            onChange={handleClickOnQuestion}
-            title={question}
-            id={`${question}${index}`}
-          />
-        ))}
-        <button type="submit">Следующий</button>
-      </form>
+      {isLoading === Meta.loading && <div>Loading...</div>}
+      {isLoading === Meta.success && question && (
+        <QuestionCard
+          question={question}
+          onClickNextBtn={(value) => onClickNextBtn(value)}
+        />
+      )}
+      {isLoading === Meta.success && !question && <ResultBlock />}
+      {isLoading === Meta.error && <div>Error</div>}
     </GameDiv>
   )
 }
