@@ -56,7 +56,7 @@ export const QuestionCard: React.FC<Props> = ({ question, onClickNextBtn }) => {
   }
 
   return (
-    <div data-testid={"questionCard"}>
+    <div id="questionCard" data-testid={"questionCard"}>
       <h1 dangerouslySetInnerHTML={{ __html: question.question }}></h1>
       {typeof question.correct_answer !== "string" && (
         <h3>Выберите несколько ответов</h3>
@@ -81,7 +81,12 @@ export const QuestionCard: React.FC<Props> = ({ question, onClickNextBtn }) => {
               isChecked={answer.isChecked}
             />
           ))}
-        <Button title="Дальше" disabled={!selected} />
+        <Button
+          title="Дальше"
+          disabled={
+            typeof question.correct_answer === "string" ? !selected : false
+          }
+        />
       </Form>
     </div>
   )

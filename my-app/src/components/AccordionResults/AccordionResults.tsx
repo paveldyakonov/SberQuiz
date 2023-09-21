@@ -28,6 +28,20 @@ export const AccordionResults: React.FC<Props> = ({
     }
   }
 
+  const answerToString = (answer: string | string[]) => {
+    if (typeof answer !== "string") {
+      return answer.sort().join(",")
+    }
+    return answer
+  }
+
+  const checkIsCorrect = (answer: string, correctAnswer: string | string[]) => {
+    if (typeof correctAnswer !== "string") {
+      return answer === correctAnswer.sort().join(",")
+    }
+    return answer === correctAnswer
+  }
+
   return (
     <AccordionDiv>
       <AccordionTitle
@@ -41,7 +55,10 @@ export const AccordionResults: React.FC<Props> = ({
         <AccordionContent data-testid={"accordion-content"}>
           {results.map((result) => (
             <AccordionContentQuestion
-              iscorrect={result.answer === result.question.correct_answer}
+              iscorrect={checkIsCorrect(
+                result.answer,
+                result.question.correct_answer,
+              )}
               key={result.answer}
             >
               <h4>
@@ -58,7 +75,7 @@ export const AccordionResults: React.FC<Props> = ({
                 Правильный ответ:{" "}
                 <span
                   dangerouslySetInnerHTML={{
-                    __html: result.question.correct_answer,
+                    __html: answerToString(result.question.correct_answer),
                   }}
                 />
               </h5>
