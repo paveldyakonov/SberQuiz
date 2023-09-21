@@ -1,3 +1,4 @@
+import { memo } from "react"
 import { AnswerDiv, AnswerInput, AnswerLabel } from "./styles"
 
 type Props = {
@@ -6,7 +7,7 @@ type Props = {
   id: string
 }
 
-export const AnswerBlock: React.FC<Props> = ({ onChange, title, id }) => {
+export const AnswerBlock: React.FC<Props> = memo(({ onChange, title, id }) => {
   return (
     <AnswerDiv>
       <div data-testid={"answer-block"}>
@@ -24,4 +25,4 @@ export const AnswerBlock: React.FC<Props> = ({ onChange, title, id }) => {
       </div>
     </AnswerDiv>
   )
-}
+})

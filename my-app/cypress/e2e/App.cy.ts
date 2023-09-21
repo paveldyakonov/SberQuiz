@@ -14,5 +14,6 @@ describe("App e2e test", () => {
       cy.get("label").first().click()
       cy.get("button").click()
     }
+    cy.get("button").should("have.text", "Попробовать снова")
   })
 })

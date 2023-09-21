@@ -1,5 +1,5 @@
 import { Question } from "@/redux/types"
-import React, { useEffect, useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import { AnswerBlock } from "@/components/AnswerBlock"
 import { Form } from "./styles"
 import { Button } from "@/components/Button"
@@ -17,7 +17,7 @@ type Variant = {
 
 export const QuestionCard: React.FC<Props> = ({ question, onClickNextBtn }) => {
   const [selected, setSelected] = useState("")
-  const [checkBoxArray, setCheckBoxArray] = useState<Variant[]>([])
+  const [questionsArray, setQuestionsArray] = useState<Variant[]>([])
 
   useEffect(() => {
     const variants: Variant[] = question.incorrect_answers
@@ -25,21 +25,24 @@ export const QuestionCard: React.FC<Props> = ({ question, onClickNextBtn }) => {
       .sort()
       .map((variant) => ({ title: variant, isChecked: false }))
 
-    setCheckBoxArray(variants)
+    setQuestionsArray(variants)
   }, [question])
 
   const handleClickOnCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const temp = [...checkBoxArray]
+    const temp = [...questionsArray]
     const index = temp.findIndex((x) => x.title === e.target.value)
 
     if (index === -1) return
     temp[index].isChecked = !temp[index].isChecked
-    setCheckBoxArray(temp)
+    setQuestionsArray(temp)
   }
 
-  const handleClickOnAnswer = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSelected(e.target.value)
-  }
+  const handleClickOnAnswer = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setSelected(e.target.value)
+    },
+    [question],
+  )
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault()
@@ -47,7 +50,7 @@ export const QuestionCard: React.FC<Props> = ({ question, onClickNextBtn }) => {
     if (typeof question.question === "string" && selected) {
       onClickNextBtn(selected)
     } else {
-      const temp = checkBoxArray
+      const temp = questionsArray
         .filter((elem) => elem.isChecked)
         .map((elem) => elem.title)
 
@@ -63,7 +66,7 @@ export const QuestionCard: React.FC<Props> = ({ question, onClickNextBtn }) => {
       )}
       <Form onSubmit={handleSubmit}>
         {typeof question.correct_answer === "string" &&
-          checkBoxArray.map((answer, index) => (
+          questionsArray.map((answer, index) => (
             <AnswerBlock
               key={`${question.question}${answer}${index}`}
               onChange={handleClickOnAnswer}
@@ -72,7 +75,7 @@ export const QuestionCard: React.FC<Props> = ({ question, onClickNextBtn }) => {
             />
           ))}
         {typeof question.correct_answer !== "string" &&
-          checkBoxArray.map((answer, index) => (
+          questionsArray.map((answer, index) => (
             <AnswerCheckboxBlock
               key={`${question.question}${answer}${index}`}
               onChange={handleClickOnCheckbox}
